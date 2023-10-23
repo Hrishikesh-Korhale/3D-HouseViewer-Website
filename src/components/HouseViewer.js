@@ -17,6 +17,7 @@ const HouseViewer = () => {
     );
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x333333); // Set the background color to light black or grayish
     containerRef.current.appendChild(renderer.domElement);
 
     // Load your 3D model
@@ -44,6 +45,7 @@ const HouseViewer = () => {
 
     // Add lights to the scene (optional but enhances the model)
     const ambientLight = new THREE.AmbientLight(0x404040);
+    ambientLight.intensity = 100; // Increase the intensity
     scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
