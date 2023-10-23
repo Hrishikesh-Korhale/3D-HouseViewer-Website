@@ -3,11 +3,12 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-const HouseViewer = () => {
+const HouseViewer = ({ setProgress }) => {
   const containerRef = useRef();
 
   useEffect(() => {
     // Initialize the Three.js scene
+    setProgress(40);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -17,10 +18,11 @@ const HouseViewer = () => {
     );
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x333333); // Set the background color to light black or grayish
+    renderer.setClearColor(0x333333); // Set the background color to light grayish
     containerRef.current.appendChild(renderer.domElement);
 
-    // Load your 3D model
+    setProgress(60);
+    // Load 3D model
     const loader = new GLTFLoader();
     let houseModel;
 
@@ -37,13 +39,15 @@ const HouseViewer = () => {
       }
     );
 
+    setProgress(80);
+
     // Position the camera as described
     camera.position.x = 2;
     camera.position.y = 2;
     camera.position.z = 2;
     camera.lookAt(0, 0, 0);
 
-    // Add lights to the scene (optional but enhances the model)
+    // Add lights to the scene
     const ambientLight = new THREE.AmbientLight(0x404040);
     ambientLight.intensity = 100; // Increase the intensity
     scene.add(ambientLight);
@@ -63,6 +67,8 @@ const HouseViewer = () => {
     };
 
     animate();
+    setProgress(100);
+    // eslint-disable-next-line
   }, []);
 
   return <div ref={containerRef} />;
